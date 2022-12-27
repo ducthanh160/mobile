@@ -12,6 +12,7 @@ import {
   Linking,
   RefreshControl,
   FlatList,
+  SectionList,
 } from 'react-native';
 
 import {
@@ -40,22 +41,36 @@ export default function App() {
     {name: 'item 11'},
     {name: 'item 12'},
     {name: 'item 13'},
-  ])
-  const [Refreshing, setRefreshing] = useState(false);
+  ]);
+  const [Sections, setSection] = useState([
+    {
+      title: 'Title 1',
+      data: ['item 1-1', 'item 1-2'],
+    }
+  ]);
 
   const onRefresh = () => {
     setRefreshing(true);
-    setItems([...Items, {id: 14, name: 'item 14'}]);
+    const adding_index = Sections.length + 1;
+    setSection([...Sections, {
+      title: 'Title ' + adding_index,
+      data: ['item ' + adding_index + '-1', 'item ' + adding_index + '-2'],
+    }])
     setRefreshing(false);
-  }
-
+  };
+  const [Refreshing, setRefreshing] = useState(false);
   return (
-    <FlatList
+    <SectionList
       keyExtractor={(item,index)=> index.toString()}
-      data={Items}
+      sections={Sections}
       renderItem={({item}) => (
         <View style={styles.item}>
-          <Text style={styles.text1}>{item.name}</Text>
+          <Text style={styles.text_item}>{item}</Text>
+        </View>
+      )}
+      renderSectionHeader={({section})=> (
+        <View style={styles.header}>
+          <Text style={styles.text_header}>{section.title}</Text>
         </View>
       )}
       refreshControl={
@@ -65,42 +80,30 @@ export default function App() {
         />
       }
     />
-    /*<ScrollView style={styles.body}
-      refreshControl={
-        <RefreshControl
-          refreshing = {Refreshing}
-          onRefresh = {onRefresh}
-        />
-      }
-    >
-      {
-        Items.map((object) => {
-          return (
-            <View style={styles.item}{id={object{id}>
-              <Text style={styles.text1}>{object.item}</Text>
-            </View>
-          )
-        })
-      }
-    </ScrollView>*/
   );
 }
 
 const styles = StyleSheet.create({
-  body: {
-    flex: 1,
-  },
-  item: {
-    backgroundColor: '#4ae1dd',
-    alignItems: 'center',
+  header: {
+    backgroundColor: '#4ae1fa',
     justifyContent: 'center',
-    margin: 10,
-    borderRadius: 50,
+    alignItems: 'center',
+    borderWidth: 2,
   },
-  text1: {
+  text_header: {
+    color: '#000000',
     fontSize: 45,
     fontStyle: 'italic',
-    color: '#000',
     margin: 10,
+  },
+  item: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderBottomWidth: 1,
+  },
+  text_item: {
+    color: '#000000',
+    fontSize: 35,
+    margin: 5,
   },
 })
