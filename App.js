@@ -42,27 +42,35 @@ export default function App() {
     {name: 'item 12'},
     {name: 'item 13'},
   ]);
-  const [Sections, setSection] = useState([
+  const DATA = [
     {
       title: 'Title 1',
-      data: ['item 1-1', 'item 1-2'],
-    }
-  ]);
+      data: ['item 1-1', 'item 1-2', 'item 1-3'],
+    },
+    {
+      title: 'Title 2',
+      data: ['item 2-1', 'item 2-2', 'item 2-3'],
+    },
+    {
+      title: 'Title 3',
+      data: ['item 3-1', 'item 3-2', 'item 3-3'],
+    },
+    {
+      title: 'Title 4',
+      data: ['item 4-1', 'item 4-2', 'item 4-3'],
+    },
+  ];
 
   const onRefresh = () => {
     setRefreshing(true);
-    const adding_index = Sections.length + 1;
-    setSection([...Sections, {
-      title: 'Title ' + adding_index,
-      data: ['item ' + adding_index + '-1', 'item ' + adding_index + '-2'],
-    }])
+    setItems([...Items, { key: 69, item: 'Item 69' }]);
     setRefreshing(false);
   };
   const [Refreshing, setRefreshing] = useState(false);
   return (
     <SectionList
       keyExtractor={(item,index)=> index.toString()}
-      sections={Sections}
+      sections={DATA}
       renderItem={({item}) => (
         <View style={styles.item}>
           <Text style={styles.text_item}>{item}</Text>
@@ -73,12 +81,12 @@ export default function App() {
           <Text style={styles.text_header}>{section.title}</Text>
         </View>
       )}
-      refreshControl={
+      /*refreshControl={
         <RefreshControl
           refreshing = {Refreshing}
           onRefresh = {onRefresh}
         />
-      }
+      }*/
     />
   );
 }
