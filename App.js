@@ -27,7 +27,7 @@ import {
 export default function App() {
   const [number, setNumber] = useState(0)
   const onPress = () => {
-    setNumber(number + 1)
+    setNumber(number + 2)
   }
   return (
     <View style={styles.body}>
