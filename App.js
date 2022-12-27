@@ -25,24 +25,57 @@ import {
  * LTI update could not be added via codemod */
 
 export default function App() {
-  const [number, setNumber] = useState(0)
-  const onPress = () => {
-    setNumber(number + 2)
+  const [Items, setItems] = useState([
+    {key: 1, item: 'item 1'},
+    {key: 2, item: 'item 2'},
+    {key: 3, item: 'item 3'},
+    {key: 4, item: 'item 4'},
+    {key: 5, item: 'item 5'},
+    {key: 6, item: 'item 6'},
+    {key: 7, item: 'item 7'},
+    {key: 8, item: 'item 8'},
+    {key: 9, item: 'item 9'},
+    {key: 10, item: 'item 10'},
+  ])
+  const [Refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    setItems([...Items, {key: 11, item: 'item 11'}]);
+    setRefreshing(false);
   }
+
   return (
-    <View style={styles.body}>
-      <Text style={styles.text1}>{number * 5}</Text>
-      <Button title='Add' onPress={onPress}></Button>
-      <Text style={styles.text1}>This is {number} time</Text>
-    </View>
-  )
+    <ScrollView style={styles.body}
+      refreshControl={
+        <RefreshControl
+          refreshing = {Refreshing}
+          onRefresh = {onRefresh}
+        />
+      }
+    >
+      {
+        Items.map((object) => {
+          return (
+            <View style={styles.item} key={object.key}>
+              <Text style={styles.text1}>{object.item}</Text>
+            </View>
+          )
+        })
+      }
+    </ScrollView>
+  );
 }
 
 const styles = StyleSheet.create({
   body: {
     flex: 1,
+  },
+  item: {
+    backgroundColor: '#4ae1dd',
     alignItems: 'center',
-    justifyContent: 'center',
+    margin: 10,
+    borderRadius: 50,
   },
   text1: {
     fontSize: 45,
